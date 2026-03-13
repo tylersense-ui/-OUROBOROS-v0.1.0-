@@ -32,8 +32,8 @@ export async function main(ns) {
     // CONFIGURATION
     // ══════════════════════════════════════════════════════════════
     
-    const GITHUB_USER = "TON_USER";  // ⚠️ REMPLACER par ton username GitHub
-    const REPO_NAME = "ouroboros";
+    const GITHUB_USER = "tylersense-ui";  
+    const REPO_NAME = "-OUROBOROS-v0.1.0-";
     const BRANCH = "main";
     const BASE_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/${BRANCH}`;
     
