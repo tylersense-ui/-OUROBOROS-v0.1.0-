@@ -1,0 +1,94 @@
+{
+  "name": "OUROBOROS",
+  "version": "0.1.0",
+  "description": "Framework d'automatisation Bitburner - Le Serpent Éternel",
+  "author": "Claude (Godlike AI Operator)",
+  "created": "2025-01-XX",
+  "bitburner_version": "2.8.1",
+  "target_bitnode": "BN-1",
+  
+  "files": {
+    "/lib/debug.js": {
+      "version": "0.1.0",
+      "type": "library",
+      "description": "Système DEBUG universel multi-niveaux",
+      "dependencies": [],
+      "ram": "0.00 GB",
+      "required": true
+    },
+    "/lib/state-manager.js": {
+      "version": "0.1.0",
+      "type": "library",
+      "description": "API persistence pour /state/",
+      "dependencies": ["/lib/debug.js"],
+      "ram": "0.00 GB",
+      "required": true
+    },
+    "/tools/log-action.js": {
+      "version": "0.1.0",
+      "type": "tool",
+      "description": "Logger actions manuelles opérateur",
+      "dependencies": ["/lib/debug.js", "/lib/state-manager.js"],
+      "ram": "1.60 GB",
+      "required": false
+    },
+    "/tools/telemetry-daemon.js": {
+      "version": "0.1.0",
+      "type": "daemon",
+      "description": "Monitoring permanent (L'Œil d'OUROBOROS)",
+      "dependencies": ["/lib/debug.js", "/lib/state-manager.js"],
+      "ram": "2.40 GB",
+      "required": false
+    },
+    "/tools/blackbox.js": {
+      "version": "0.1.0",
+      "type": "tool",
+      "description": "Coding contracts solver automatique",
+      "dependencies": ["/lib/debug.js", "/lib/state-manager.js"],
+      "ram": "3.20 GB",
+      "required": false
+    }
+  },
+  
+  "directories": {
+    "/lib": "Bibliothèques réutilisables",
+    "/core": "Logique centrale (à venir)",
+    "/workers": "Workers minimalistes (à venir)",
+    "/managers": "Gestionnaires intelligents (à venir)",
+    "/state": "Fichiers JSON générés (auto-créé)",
+    "/tools": "Outils utilitaires"
+  },
+  
+  "state_files": {
+    "/state/network-status.json": "État réseau temps réel",
+    "/state/performance-metrics.json": "Métriques performance",
+    "/state/player-stats.json": "Stats joueur",
+    "/state/daemon-heartbeat.json": "Heartbeat telemetry",
+    "/state/operator-actions.json": "Historique actions opérateur",
+    "/state/contracts-history.json": "Historique coding contracts",
+    "/state/version-tracking.json": "Versions fichiers actifs"
+  },
+  
+  "deployment": {
+    "method": "GitHub wget",
+    "repository": "https://github.com/TON_USER/ouroboros",
+    "branch": "main",
+    "deploy_script": "deploy-ouroboros-v0.1.0.js"
+  },
+  
+  "changelog": {
+    "0.1.0": {
+      "date": "2025-01-XX",
+      "changes": [
+        "Création initiale OUROBOROS",
+        "Système DEBUG universel (4 niveaux)",
+        "State Manager avec auto-création /state/",
+        "Telemetry Daemon avec alarmes",
+        "Operator Logger",
+        "Coding Contracts Solver (29 types)",
+        "Headers ASCII art complets",
+        "Support --debug sur tous les scripts"
+      ]
+    }
+  }
+}
