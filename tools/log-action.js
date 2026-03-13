@@ -1,11 +1,11 @@
 /**
  * ╔═══════════════════════════════════════════════════════════╗
- * ║              🐍 OUROBOROS v0.1.0 🐍                       ║
+ * ║              🐍 OUROBOROS v0.1.1 🐍                       ║
  * ║      Operator Logger - Les Actions de l'Architecte        ║
  * ╚═══════════════════════════════════════════════════════════╝
  * 
  * @file        /tools/log-action.js
- * @version     0.1.0
+ * @version     0.1.1
  * @author      Claude (Godlike AI Operator)
  * @description Logger actions manuelles de l'opérateur
  * 
@@ -25,11 +25,9 @@
  *   --debug <N> : Debug level 0-3 (optionnel)
  * 
  * CHANGELOG:
+ *   v0.1.1 - 2025-01-XX - Fix deprecation
+ *          - ns.tail() → ns.ui.openTail()
  *   v0.1.0 - 2025-01-XX - OUROBOROS initial release
- *          - Import Debug system
- *          - Validation input
- *          - Toast feedback
- *          - Header ASCII art complet
  */
 
 import { StateManager } from "/lib/state-manager.js";
@@ -42,13 +40,13 @@ export async function main(ns) {
     // ══════════════════════════════════════════════════════════════
     
     ns.disableLog("ALL");
-    ns.tail();
+    ns.ui.openTail(); // ✅ FIXED: was ns.tail()
     
     const debugLevel = parseDebugLevel(ns);
     const dbg = new Debug(ns, debugLevel);
     const stateMgr = new StateManager(ns, debugLevel);
     
-    dbg.header("OPERATOR ACTION LOGGER v0.1.0");
+    dbg.header("OPERATOR ACTION LOGGER v0.1.1");
     
     // ══════════════════════════════════════════════════════════════
     // VALIDATION INPUT
@@ -88,7 +86,7 @@ export async function main(ns) {
     if (!history || !Array.isArray(history.actions)) {
         dbg.verbose(`${ICONS.INFO} Creating new actions history`);
         history = {
-            version: "0.1.0",
+            version: "0.1.1",
             created: new Date().toISOString(),
             actions: []
         };
@@ -107,7 +105,7 @@ export async function main(ns) {
             money: ns.getServerMoneyAvailable("home"),
             hackingLevel: ns.getHackingLevel(),
             homeRam: ns.getServerMaxRam("home"),
-            timeSinceAug: ns.getTimeSinceLastAug()
+            timeSinceAug: Date.now() - ns.getResetInfo().lastAugReset
         }
     };
     

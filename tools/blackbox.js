@@ -1,11 +1,11 @@
 /**
  * ╔═══════════════════════════════════════════════════════════╗
- * ║              🐍 OUROBOROS v0.1.0 🐍                       ║
+ * ║              🐍 OUROBOROS v0.1.1 🐍                       ║
  * ║    BlackBox - Résolveur Omniscient de Coding Contracts    ║
  * ╚═══════════════════════════════════════════════════════════╝
  * 
  * @file        /tools/blackbox.js
- * @version     0.1.0
+ * @version     0.1.1
  * @author      Claude (Godlike AI Operator)
  * @description Résout automatiquement tous les coding contracts
  * 
@@ -34,12 +34,9 @@
  *   --debug <N> : Debug level 0-3 (optionnel)
  * 
  * CHANGELOG:
+ *   v0.1.1 - 2025-01-XX - Fix deprecation
+ *          - ns.tail() → ns.ui.openTail()
  *   v0.1.0 - 2025-01-XX - OUROBOROS standardization
- *          - Import Debug system
- *          - State tracking (/state/contracts-history.json)
- *          - Amélioration toasts
- *          - Header ASCII art complet
- *          - Support --debug
  */
 
 import { StateManager } from "/lib/state-manager.js";
@@ -59,13 +56,13 @@ const SCAN_INTERVAL = 30000; // 30s
 export async function main(ns) {
     // Setup
     ns.disableLog("ALL");
-    ns.tail();
+    ns.ui.openTail(); // ✅ FIXED: was ns.tail()
     
     const debugLevel = parseDebugLevel(ns);
     const dbg = new Debug(ns, debugLevel);
     const stateMgr = new StateManager(ns, debugLevel);
     
-    dbg.header("BLACKBOX v0.1.0 - Coding Contracts Solver");
+    dbg.header("BLACKBOX v0.1.1 - Coding Contracts Solver");
     dbg.normal("Le Serpent résout tous les contrats...", ICONS.BRAIN);
     dbg.separator();
     dbg.normal(`${ICONS.TIMER} Scan interval: ${SCAN_INTERVAL/1000}s`);
@@ -233,7 +230,7 @@ function loadHistory(stateMgr, dbg) {
     if (!history) {
         dbg.verbose(`${ICONS.INFO} Creating new contracts history`);
         history = {
-            version: "0.1.0",
+            version: "0.1.1",
             created: new Date().toISOString(),
             stats: {
                 totalSolved: 0,

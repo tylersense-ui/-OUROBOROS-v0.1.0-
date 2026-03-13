@@ -1,11 +1,11 @@
 /**
  * ╔═══════════════════════════════════════════════════════════╗
- * ║              🐍 OUROBOROS v0.1.0 🐍                       ║
+ * ║              🐍 OUROBOROS v0.1.1 🐍                       ║
  * ║      Telemetry Daemon - L'Œil Omniscient du Serpent      ║
  * ╚═══════════════════════════════════════════════════════════╝
  * 
  * @file        /tools/telemetry-daemon.js
- * @version     0.1.0
+ * @version     0.1.1
  * @author      Claude (Godlike AI Operator)
  * @description Daemon permanent qui surveille TOUT pour diagnostic
  * 
@@ -33,11 +33,10 @@
  *   ⚠️  Pas de batcher actif détecté
  * 
  * CHANGELOG:
+ *   v0.1.1 - 2025-01-XX - Fix deprecations
+ *          - ns.tail() → ns.ui.openTail()
+ *          - ns.getTimeSinceLastAug() → Date.now() - ns.getResetInfo().lastAugReset
  *   v0.1.0 - 2025-01-XX - OUROBOROS initial release
- *          - Import Debug system
- *          - Alarmes automatiques
- *          - Métriques network avancées
- *          - Support --debug
  */
 
 import { StateManager } from "/lib/state-manager.js";
@@ -59,13 +58,13 @@ const ALARM_THRESHOLD_EMPTY_ROOTED = 5; // serveurs
 export async function main(ns) {
     // Setup
     ns.disableLog("ALL");
-    ns.tail();
+    ns.ui.openTail(); // ✅ FIXED: was ns.tail()
     
     const debugLevel = parseDebugLevel(ns);
     const dbg = new Debug(ns, debugLevel);
     const stateMgr = new StateManager(ns, debugLevel);
     
-    dbg.header("TELEMETRY DAEMON v0.1.0");
+    dbg.header("TELEMETRY DAEMON v0.1.1");
     dbg.normal("L'Œil d'OUROBOROS surveille la partie...", ICONS.EYE);
     dbg.separator();
     dbg.normal(`${ICONS.INFO} Update interval: ${UPDATE_INTERVAL/1000}s`);
@@ -92,7 +91,7 @@ export async function main(ns) {
         // 1️⃣ NETWORK STATUS (CRITIQUE)
         // ══════════════════════════════════════════════════════════════
         
-        dbg.verbose("${ICONS.NETWORK} Collecting network status...");
+        dbg.verbose(`${ICONS.NETWORK} Collecting network status...`);
         dbg.startTimer("network-scan");
         
         const networkStatus = collectNetworkStatus(ns, dbg);
@@ -184,7 +183,7 @@ export async function main(ns) {
             timestamp: timestamp,
             cycle: cycle,
             pid: ns.pid,
-            uptime: ns.getTimeSinceLastAug(),
+            uptime: Date.now() - ns.getResetInfo().lastAugReset, // ✅ FIXED
             debugLevel: debugLevel,
             alarms: alarmHistory.slice(-10) // Last 10 alarms
         });
@@ -330,7 +329,7 @@ function collectPlayerStats(ns, dbg) {
         timestamp: new Date().toISOString(),
         hackingLevel: ns.getHackingLevel(),
         currentBitNode: "BN-1", // Placeholder (besoin Singularity pour détecter)
-        timeSinceLastAug: ns.getTimeSinceLastAug(),
+        timeSinceLastAug: Date.now() - ns.getResetInfo().lastAugReset, // ✅ FIXED
         homeRamMax: ns.getServerMaxRam("home"),
         homeRamUsed: ns.getServerUsedRam("home"),
         purchasedServers: ns.getPurchasedServers().length
@@ -345,11 +344,12 @@ function collectPlayerStats(ns, dbg) {
  */
 function collectVersionInfo(ns, dbg) {
     const files = [
-        "/boot.js",
+        "/core/early-creeper.js",
         "/lib/debug.js",
         "/lib/state-manager.js",
         "/tools/log-action.js",
-        "/tools/telemetry-daemon.js"
+        "/tools/telemetry-daemon.js",
+        "/tools/blackbox.js"
     ];
     
     const versions = {};
@@ -382,8 +382,9 @@ function detectBatcher(ns, dbg) {
     for (const server of allServers) {
         const processes = ns.ps(server);
         for (const proc of processes) {
-            // Chercher scripts avec "batch" dans le nom
+            // Chercher scripts avec "batch", "creeper", "orchestrat", ou "controller"
             if (proc.filename.includes("batch") || 
+                proc.filename.includes("creeper") ||
                 proc.filename.includes("orchestrat") ||
                 proc.filename.includes("controller")) {
                 return true;
