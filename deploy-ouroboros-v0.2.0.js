@@ -1,25 +1,29 @@
 /**
  * ╔═══════════════════════════════════════════════════════════╗
- * ║              🐍 OUROBOROS v0.1.1 🐍                       ║
+ * ║              🐍 OUROBOROS v0.2.0 🐍                       ║
  * ║        Deploy Script - Déploiement Automatique            ║
  * ╚═══════════════════════════════════════════════════════════╝
  * 
- * @file        deploy-ouroboros-v0.1.1.js
- * @version     0.1.1
+ * @file        deploy-ouroboros-v0.2.0.js
+ * @version     0.2.0
  * @author      Claude (Godlike AI Operator)
- * @description Déploie OUROBOROS v0.1.1 depuis GitHub vers Bitburner
+ * @description Déploie OUROBOROS v0.2.0 depuis GitHub vers Bitburner
  * 
  * USAGE:
- *   1. wget https://raw.githubusercontent.com/tylersense-ui/-OUROBOROS-v0.1.0-/main/deploy-ouroboros-v0.1.1.js deploy.js
+ *   1. wget https://raw.githubusercontent.com/tylersense-ui/-OUROBOROS-v0.1.0-/main/deploy-ouroboros-v0.2.0.js deploy.js
  *   2. run deploy.js
  * 
  * ACTIONS:
  *   ✅ Crée structure dossiers
- *   ✅ Télécharge tous les fichiers v0.1.1
+ *   ✅ Télécharge tous les fichiers v0.2.0
  *   ✅ Vérifie intégrité
  *   ✅ Rapport détaillé
  * 
  * CHANGELOG:
+ *   v0.2.0 - 2025-01-XX - HWGW Batching update
+ *          - Ajout prep-module.js
+ *          - Ajout simple-batcher.js
+ *          - Update manifest + CHANGELOG
  *   v0.1.1 - 2025-01-XX - Ajout workers/, core/, CHANGELOG
  *   v0.1.0 - 2025-01-XX - Création initiale
  */
@@ -38,28 +42,35 @@ export async function main(ns) {
     const BRANCH = "main";
     const BASE_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/${BRANCH}`;
     
-    // Liste des fichiers à télécharger (v0.1.1)
+    // Liste des fichiers à télécharger (v0.2.0)
     const FILES = [
         // Libraries
         { path: "/lib/debug.js", required: true },
         { path: "/lib/state-manager.js", required: true },
+        { path: "/lib/prep-module.js", required: true }, // 🆕 v0.2.0
         
-        // Workers (NOUVEAUX v0.1.1)
+        // Workers
         { path: "/workers/hack.js", required: true },
         { path: "/workers/grow.js", required: true },
         { path: "/workers/weaken.js", required: true },
         
-        // Core (NOUVEAU v0.1.1)
-        { path: "/core/early-creeper.js", required: true },
+        // Core
+        { path: "/core/early-creeper.js", required: false },
+        { path: "/core/simple-batcher.js", required: true }, // 🆕 v0.2.0
         
-        // Tools (mis à jour v0.1.1)
+        // Managers
+        { path: "/managers/server-manager.js", required: false },
+        
+        // Tools
         { path: "/tools/log-action.js", required: false },
         { path: "/tools/telemetry-daemon.js", required: false },
         { path: "/tools/blackbox.js", required: false },
+        { path: "/tools/target-diagnostic.js", required: false },
         
         // Documentation
         { path: "/manifest.json", required: false },
-        { path: "/docs/ChangeLogs/CHANGELOG.md", required: false }
+        { path: "/CHANGELOG.md", required: false },
+        { path: "/README.md", required: false }
     ];
     
     // ══════════════════════════════════════════════════════════════
@@ -67,8 +78,9 @@ export async function main(ns) {
     // ══════════════════════════════════════════════════════════════
     
     ns.print("╔═══════════════════════════════════════════════════════════╗");
-    ns.print("║              🐍 OUROBOROS v0.1.1 🐍                       ║");
+    ns.print("║              🐍 OUROBOROS v0.2.0 🐍                       ║");
     ns.print("║            Déploiement Automatique                        ║");
+    ns.print("║         HWGW BATCHING - LE SERPENT FRAPPE !              ║");
     ns.print("╚═══════════════════════════════════════════════════════════╝");
     ns.print("");
     ns.print(`📡 Repository: ${GITHUB_USER}/${REPO_NAME}`);
@@ -87,11 +99,10 @@ export async function main(ns) {
     ns.print("═════════════════════════════════════════════════════════════");
     ns.print("");
     
-    const DIRS = ["/lib", "/core", "/workers", "/managers", "/state", "/tools", "/docs/ChangeLogs"];
+    const DIRS = ["/lib", "/core", "/workers", "/managers", "/state", "/tools"];
     
     for (const dir of DIRS) {
         try {
-            // Créer dossier via write dummy file
             await ns.write(`${dir}/.keep`, "", "w");
             ns.print(`✅ ${dir}/`);
         } catch (error) {
@@ -200,25 +211,31 @@ export async function main(ns) {
     if (failedCount === 0) {
         ns.print("╔═══════════════════════════════════════════════════════════╗");
         ns.print("║  🎉 DÉPLOIEMENT RÉUSSI !                                  ║");
-        ns.print("║  🐍 OUROBOROS v0.1.1 est prêt à dévorer cette partie      ║");
+        ns.print("║  🐍 OUROBOROS v0.2.0 - LE SERPENT FRAPPE !               ║");
         ns.print("╚═══════════════════════════════════════════════════════════╝");
         ns.print("");
         ns.print("🚀 PROCHAINES ÉTAPES:");
         ns.print("");
-        ns.print("1️⃣  Lancer Early Creeper (orchestrateur early-game):");
-        ns.print("   run /core/early-creeper.js");
+        ns.print("1️⃣  Kill early-creeper (si actif):");
+        ns.print("   kill early-creeper.js");
         ns.print("");
-        ns.print("2️⃣  Ou avec debug verbose:");
-        ns.print("   run /core/early-creeper.js --debug 2");
+        ns.print("2️⃣  Lancer Simple Batcher (HWGW):");
+        ns.print("   run /core/simple-batcher.js --debug 2");
         ns.print("");
-        ns.print("3️⃣  Logger une action:");
-        ns.print('   run /tools/log-action.js "OUROBOROS v0.1.1 déployé"');
+        ns.print("3️⃣  Observer le $ monter ! 💰");
+        ns.print("   Revenue attendu: $0/s → $10k-50k/s");
         ns.print("");
-        ns.print("4️⃣  Monitoring (optionnel, consomme 4.8GB RAM):");
-        ns.print("   run /tools/telemetry-daemon.js");
+        ns.print("4️⃣  Logger le succès:");
+        ns.print('   run /tools/log-action.js "HWGW batching v0.2.0 déployé !"');
+        ns.print("");
+        ns.print("📊 NOUVEAUTÉS v0.2.0:");
+        ns.print("   🆕 prep-module.js - Prep parallèle réutilisable");
+        ns.print("   🆕 simple-batcher.js - Orchestrateur HWGW");
+        ns.print("   ⚡ Revenue: $0/s → $$$$/s");
+        ns.print("   🎯 Hack 5% par batch avec padding 10x");
         ns.print("");
         
-        ns.toast("🐍 OUROBOROS v0.1.1 déployé avec succès !", "success", 5000);
+        ns.toast("🐍 OUROBOROS v0.2.0 déployé avec succès !", "success", 5000);
         
     } else {
         ns.print("╔═══════════════════════════════════════════════════════════╗");
@@ -238,5 +255,5 @@ export async function main(ns) {
     }
     
     ns.print("═════════════════════════════════════════════════════════════");
-    ns.tprint("🐍 OUROBOROS v0.1.1 deployment script finished. Check tail window for details.");
+    ns.tprint("🐍 OUROBOROS v0.2.0 deployment script finished. Check tail window for details.");
 }
