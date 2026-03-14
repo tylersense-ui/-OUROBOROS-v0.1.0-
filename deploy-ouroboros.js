@@ -44,6 +44,8 @@ export async function main(ns) {
     
     // Liste des fichiers à télécharger (v0.2.0)
     const FILES = [
+        // Deploy
+        { path: "/deploy-ouroboros.js", required: true },
         // Libraries
         { path: "/lib/debug.js", required: true },
         { path: "/lib/state-manager.js", required: true },
