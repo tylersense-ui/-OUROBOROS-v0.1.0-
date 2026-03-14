@@ -1,56 +1,65 @@
 /**
  * ╔═══════════════════════════════════════════════════════════╗
- * ║              🐍 OUROBOROS v0.1.0 🐍                       ║
+ * ║              🐍 OUROBOROS v0.1.1 🐍                       ║
  * ║        Deploy Script - Déploiement Automatique            ║
  * ╚═══════════════════════════════════════════════════════════╝
  * 
- * @file        deploy-ouroboros-v0.1.0.js
- * @version     0.1.0
+ * @file        deploy-ouroboros-v0.1.1.js
+ * @version     0.1.1
  * @author      Claude (Godlike AI Operator)
- * @description Déploie OUROBOROS depuis GitHub vers Bitburner
+ * @description Déploie OUROBOROS v0.1.1 depuis GitHub vers Bitburner
  * 
  * USAGE:
- *   1. wget https://raw.githubusercontent.com/TON_USER/ouroboros/main/deploy-ouroboros-v0.1.0.js deploy.js
+ *   1. wget https://raw.githubusercontent.com/tylersense-ui/-OUROBOROS-v0.1.0-/main/deploy-ouroboros-v0.1.1.js deploy.js
  *   2. run deploy.js
  * 
  * ACTIONS:
  *   ✅ Crée structure dossiers
- *   ✅ Télécharge tous les fichiers
+ *   ✅ Télécharge tous les fichiers v0.1.1
  *   ✅ Vérifie intégrité
  *   ✅ Rapport détaillé
  * 
  * CHANGELOG:
+ *   v0.1.1 - 2025-01-XX - Ajout workers/, core/, CHANGELOG
  *   v0.1.0 - 2025-01-XX - Création initiale
  */
 
 /** @param {NS} ns */
 export async function main(ns) {
     ns.disableLog("ALL");
-    ns.tail();
+    ns.ui.openTail();
     
     // ══════════════════════════════════════════════════════════════
     // CONFIGURATION
     // ══════════════════════════════════════════════════════════════
     
-    const GITHUB_USER = "tylersense-ui";  
+    const GITHUB_USER = "tylersense-ui";
     const REPO_NAME = "-OUROBOROS-v0.1.0-";
     const BRANCH = "main";
     const BASE_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/${BRANCH}`;
     
-    // Liste des fichiers à télécharger
+    // Liste des fichiers à télécharger (v0.1.1)
     const FILES = [
         // Libraries
         { path: "/lib/debug.js", required: true },
         { path: "/lib/state-manager.js", required: true },
         
-        // Tools
+        // Workers (NOUVEAUX v0.1.1)
+        { path: "/workers/hack.js", required: true },
+        { path: "/workers/grow.js", required: true },
+        { path: "/workers/weaken.js", required: true },
+        
+        // Core (NOUVEAU v0.1.1)
+        { path: "/core/early-creeper.js", required: true },
+        
+        // Tools (mis à jour v0.1.1)
         { path: "/tools/log-action.js", required: false },
         { path: "/tools/telemetry-daemon.js", required: false },
         { path: "/tools/blackbox.js", required: false },
         
         // Documentation
-        { path: "/README.md", required: false },
-        { path: "/manifest.json", required: false }
+        { path: "/manifest.json", required: false },
+        { path: "/docs/ChangeLogs/CHANGELOG.md", required: false }
     ];
     
     // ══════════════════════════════════════════════════════════════
@@ -58,7 +67,7 @@ export async function main(ns) {
     // ══════════════════════════════════════════════════════════════
     
     ns.print("╔═══════════════════════════════════════════════════════════╗");
-    ns.print("║              🐍 OUROBOROS v0.1.0 🐍                       ║");
+    ns.print("║              🐍 OUROBOROS v0.1.1 🐍                       ║");
     ns.print("║            Déploiement Automatique                        ║");
     ns.print("╚═══════════════════════════════════════════════════════════╝");
     ns.print("");
@@ -78,7 +87,7 @@ export async function main(ns) {
     ns.print("═════════════════════════════════════════════════════════════");
     ns.print("");
     
-    const DIRS = ["/lib", "/core", "/workers", "/managers", "/state", "/tools"];
+    const DIRS = ["/lib", "/core", "/workers", "/managers", "/state", "/tools", "/docs/ChangeLogs"];
     
     for (const dir of DIRS) {
         try {
@@ -191,22 +200,25 @@ export async function main(ns) {
     if (failedCount === 0) {
         ns.print("╔═══════════════════════════════════════════════════════════╗");
         ns.print("║  🎉 DÉPLOIEMENT RÉUSSI !                                  ║");
-        ns.print("║  🐍 OUROBOROS est prêt à dévorer cette partie             ║");
+        ns.print("║  🐍 OUROBOROS v0.1.1 est prêt à dévorer cette partie      ║");
         ns.print("╚═══════════════════════════════════════════════════════════╝");
         ns.print("");
         ns.print("🚀 PROCHAINES ÉTAPES:");
         ns.print("");
-        ns.print("1️⃣  Lancer le monitoring:");
-        ns.print("   run /tools/telemetry-daemon.js");
+        ns.print("1️⃣  Lancer Early Creeper (orchestrateur early-game):");
+        ns.print("   run /core/early-creeper.js");
         ns.print("");
-        ns.print("2️⃣  Résoudre les coding contracts:");
-        ns.print("   run /tools/blackbox.js");
+        ns.print("2️⃣  Ou avec debug verbose:");
+        ns.print("   run /core/early-creeper.js --debug 2");
         ns.print("");
         ns.print("3️⃣  Logger une action:");
-        ns.print('   run /tools/log-action.js "Premier déploiement OUROBOROS"');
+        ns.print('   run /tools/log-action.js "OUROBOROS v0.1.1 déployé"');
+        ns.print("");
+        ns.print("4️⃣  Monitoring (optionnel, consomme 4.8GB RAM):");
+        ns.print("   run /tools/telemetry-daemon.js");
         ns.print("");
         
-        ns.toast("🐍 OUROBOROS déployé avec succès !", "success", 5000);
+        ns.toast("🐍 OUROBOROS v0.1.1 déployé avec succès !", "success", 5000);
         
     } else {
         ns.print("╔═══════════════════════════════════════════════════════════╗");
@@ -226,5 +238,5 @@ export async function main(ns) {
     }
     
     ns.print("═════════════════════════════════════════════════════════════");
-    ns.tprint("🐍 OUROBOROS deployment script finished. Check tail window for details.");
+    ns.tprint("🐍 OUROBOROS v0.1.1 deployment script finished. Check tail window for details.");
 }
