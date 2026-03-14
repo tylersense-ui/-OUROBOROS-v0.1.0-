@@ -1,11 +1,11 @@
 /**
  * ╔═══════════════════════════════════════════════════════════╗
- * ║              🐍 OUROBOROS v0.1.1 🐍                       ║
+ * ║              🐍 OUROBOROS v0.1.2 🐍                       ║
  * ║      Operator Logger - Les Actions de l'Architecte        ║
  * ╚═══════════════════════════════════════════════════════════╝
  * 
  * @file        /tools/log-action.js
- * @version     0.1.1
+ * @version     0.1.2
  * @author      Claude (Godlike AI Operator)
  * @description Logger actions manuelles de l'opérateur
  * 
@@ -25,6 +25,8 @@
  *   --debug <N> : Debug level 0-3 (optionnel)
  * 
  * CHANGELOG:
+ *   v0.1.2 - 2025-01-XX - Removed auto-tail
+ *          - No more tail window spam (1 action = 1 window annoying)
  *   v0.1.1 - 2025-01-XX - Fix deprecation
  *          - ns.tail() → ns.ui.openTail()
  *   v0.1.0 - 2025-01-XX - OUROBOROS initial release
@@ -40,13 +42,11 @@ export async function main(ns) {
     // ══════════════════════════════════════════════════════════════
     
     ns.disableLog("ALL");
-    ns.ui.openTail(); // ✅ FIXED: was ns.tail()
+    // ✅ REMOVED: ns.ui.openTail() - no more tail spam !
     
     const debugLevel = parseDebugLevel(ns);
     const dbg = new Debug(ns, debugLevel);
     const stateMgr = new StateManager(ns, debugLevel);
-    
-    dbg.header("OPERATOR ACTION LOGGER v0.1.1");
     
     // ══════════════════════════════════════════════════════════════
     // VALIDATION INPUT
@@ -60,7 +60,6 @@ export async function main(ns) {
     });
     
     if (actionArgs.length === 0) {
-        dbg.error("Missing action description");
         ns.tprint(`${ICONS.ERROR} USAGE: run /tools/log-action.js "Action description"`);
         ns.tprint(`${ICONS.INFO} Example: run /tools/log-action.js "Bought NeuroFlux x5"`);
         return;
@@ -70,12 +69,9 @@ export async function main(ns) {
     
     // Validation: action non vide après trim
     if (action === "") {
-        dbg.error("Empty action description");
-        dbg.toastError("Action cannot be empty");
+        ns.tprint(`${ICONS.ERROR} Action cannot be empty`);
         return;
     }
-    
-    dbg.normal(`${ICONS.INFO} Logging action: "${action}"`);
     
     // ══════════════════════════════════════════════════════════════
     // LOAD HISTORY
@@ -84,15 +80,12 @@ export async function main(ns) {
     let history = stateMgr.load("operator-actions.json");
     
     if (!history || !Array.isArray(history.actions)) {
-        dbg.verbose(`${ICONS.INFO} Creating new actions history`);
         history = {
-            version: "0.1.1",
+            version: "0.1.2",
             created: new Date().toISOString(),
             actions: []
         };
     }
-    
-    dbg.verbose(`${ICONS.CHART} Current history: ${history.actions.length} actions`);
     
     // ══════════════════════════════════════════════════════════════
     // CREATE ENTRY
@@ -111,18 +104,12 @@ export async function main(ns) {
     
     history.actions.push(entry);
     
-    dbg.verbose(`${ICONS.SUCCESS} Entry created:`);
-    dbg.verbose(`  Money: $${ns.formatNumber(entry.context.money)}`);
-    dbg.verbose(`  Hacking: ${entry.context.hackingLevel}`);
-    
     // ══════════════════════════════════════════════════════════════
     // TRIM HISTORY (keep last 100)
     // ══════════════════════════════════════════════════════════════
     
     if (history.actions.length > 100) {
-        const removed = history.actions.length - 100;
         history.actions = history.actions.slice(-100);
-        dbg.verbose(`${ICONS.INFO} Trimmed ${removed} old entries (keeping 100)`);
     }
     
     // ══════════════════════════════════════════════════════════════
@@ -132,16 +119,13 @@ export async function main(ns) {
     const success = await stateMgr.save("operator-actions.json", history);
     
     if (success) {
-        dbg.success("Action logged successfully");
-        dbg.toastSuccess(`Logged: ${action}`);
+        // Toast confirmation
+        ns.toast(`${ICONS.SUCCESS} Logged: ${action}`, "success", 3000);
         
+        // Terminal confirmation
         ns.tprint(`${ICONS.SUCCESS} Action logged: ${action}`);
         ns.tprint(`${ICONS.CHART} Total actions in history: ${history.actions.length}`);
     } else {
-        dbg.error("Failed to save action");
-        dbg.toastError("Failed to save action");
+        ns.tprint(`${ICONS.ERROR} Failed to save action`);
     }
-    
-    dbg.separator();
-    dbg.normal(`${ICONS.SNAKE} OUROBOROS remembers all`, ICONS.EYE);
 }
