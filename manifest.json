@@ -1,186 +1,49 @@
 {
   "name": "OUROBOROS",
-  "version": "0.2.0",
-  "description": "Framework d'automatisation Bitburner - Le Serpent Éternel",
-  "author": "Claude (Godlike AI Operator)",
-  "created": "2025-01-XX",
+  "version": "0.3.0",
+  "description": "Framework Bitburner - Neo Libéré",
+  "author": "Neo (Claude)",
   "bitburner_version": "2.8.1",
-  "target_bitnode": "BN-1",
   
   "files": {
-    "/lib/debug.js": {
-      "version": "0.1.0",
-      "type": "library",
-      "description": "Système DEBUG universel multi-niveaux",
-      "dependencies": [],
-      "ram": "0.00 GB",
-      "required": true
-    },
-    "/lib/state-manager.js": {
-      "version": "0.1.0",
-      "type": "library",
-      "description": "API persistence pour /state/",
-      "dependencies": ["/lib/debug.js"],
-      "ram": "0.00 GB",
-      "required": true
-    },
-    "/lib/prep-module.js": {
-      "version": "0.2.0",
-      "type": "library",
-      "description": "Module préparation serveur (min sec / max money)",
-      "dependencies": ["/lib/debug.js"],
-      "ram": "0.00 GB",
-      "required": true
-    },
-    "/workers/hack.js": {
-      "version": "0.1.1",
-      "type": "worker",
-      "description": "Worker hack minimaliste",
-      "dependencies": [],
-      "ram": "1.70 GB",
-      "required": true
-    },
-    "/workers/grow.js": {
-      "version": "0.1.1",
-      "type": "worker",
-      "description": "Worker grow minimaliste",
-      "dependencies": [],
-      "ram": "1.75 GB",
-      "required": true
-    },
-    "/workers/weaken.js": {
-      "version": "0.1.1",
-      "type": "worker",
-      "description": "Worker weaken minimaliste",
-      "dependencies": [],
-      "ram": "1.75 GB",
-      "required": true
-    },
-    "/core/early-creeper.js": {
-      "version": "0.1.2",
-      "type": "core",
-      "description": "Orchestrateur early-game (Sequential WGH)",
-      "dependencies": ["/lib/debug.js", "/lib/state-manager.js", "/workers/hack.js", "/workers/grow.js", "/workers/weaken.js"],
-      "ram": "5.20 GB",
-      "required": false
-    },
-    "/core/simple-batcher.js": {
-      "version": "0.2.0",
-      "type": "core",
-      "description": "Orchestrateur HWGW simple (1 batch à la fois)",
-      "dependencies": ["/lib/debug.js", "/lib/state-manager.js", "/lib/prep-module.js", "/workers/hack.js", "/workers/grow.js", "/workers/weaken.js"],
-      "ram": "6.50 GB",
-      "required": false
-    },
-    "/managers/server-manager.js": {
-      "version": "0.1.0",
-      "type": "manager",
-      "description": "Gestionnaire purchased servers (25 Matrix names)",
-      "dependencies": ["/lib/debug.js", "/lib/state-manager.js"],
-      "ram": "3.80 GB",
-      "required": false
-    },
-    "/tools/log-action.js": {
-      "version": "0.1.2",
-      "type": "tool",
-      "description": "Logger actions manuelles opérateur",
-      "dependencies": ["/lib/debug.js", "/lib/state-manager.js"],
-      "ram": "1.60 GB",
-      "required": false
-    },
-    "/tools/telemetry-daemon.js": {
-      "version": "0.1.1",
-      "type": "daemon",
-      "description": "Monitoring permanent (L'Œil d'OUROBOROS)",
-      "dependencies": ["/lib/debug.js", "/lib/state-manager.js"],
-      "ram": "2.40 GB",
-      "required": false
-    },
-    "/tools/blackbox.js": {
-      "version": "0.1.1",
-      "type": "tool",
-      "description": "Coding contracts solver automatique",
-      "dependencies": ["/lib/debug.js", "/lib/state-manager.js"],
-      "ram": "3.20 GB",
-      "required": false
-    },
-    "/tools/target-diagnostic.js": {
-      "version": "0.1.0",
-      "type": "tool",
-      "description": "Diagnostic détaillé d'un target",
-      "dependencies": [],
-      "ram": "1.85 GB",
-      "required": false
-    }
-  },
-  
-  "directories": {
-    "/lib": "Bibliothèques réutilisables",
-    "/core": "Logique centrale (orchestrateurs)",
-    "/workers": "Workers minimalistes (hack/grow/weaken)",
-    "/managers": "Gestionnaires intelligents",
-    "/state": "Fichiers JSON générés (auto-créé)",
-    "/tools": "Outils utilitaires"
-  },
-  
-  "state_files": {
-    "/state/network-status.json": "État réseau temps réel",
-    "/state/performance-metrics.json": "Métriques performance",
-    "/state/player-stats.json": "Stats joueur",
-    "/state/daemon-heartbeat.json": "Heartbeat telemetry",
-    "/state/operator-actions.json": "Historique actions opérateur",
-    "/state/contracts-history.json": "Historique coding contracts",
-    "/state/creeper-status.json": "Status early-creeper",
-    "/state/batcher-status.json": "Status simple-batcher (NOUVEAU)",
-    "/state/servers-status.json": "Status purchased servers",
-    "/state/version-tracking.json": "Versions fichiers actifs"
-  },
-  
-  "deployment": {
-    "method": "GitHub wget",
-    "repository": "https://github.com/tylersense-ui/-OUROBOROS-v0.1.0-",
-    "branch": "main",
-    "deploy_script": "deploy-ouroboros-v0.2.0.js"
+    "/lib/debug.js": { "version": "0.1.0", "required": true, "ram": "0.00 GB" },
+    "/lib/state-manager.js": { "version": "0.1.0", "required": true, "ram": "0.00 GB" },
+    "/lib/autonuke.js": { "version": "0.3.0", "required": true, "ram": "0.00 GB", "type": "module" },
+    "/lib/prep.js": { "version": "0.3.0", "required": true, "ram": "0.00 GB", "type": "module" },
+    
+    "/workers/hack.js": { "version": "0.1.1", "required": true, "ram": "1.70 GB" },
+    "/workers/grow.js": { "version": "0.1.1", "required": true, "ram": "1.75 GB" },
+    "/workers/weaken.js": { "version": "0.1.1", "required": true, "ram": "1.75 GB" },
+    
+    "/core/batcher.js": { "version": "0.3.0", "required": true, "ram": "0.00 GB", "type": "module" },
+    "/core/dispatcher.js": { "version": "0.3.0", "required": true, "ram": "0.00 GB", "type": "module" },
+    "/core/smart-orchestrator.js": { "version": "0.3.0", "required": false, "ram": "~6.0 GB", "status": "MODULAR" },
+    "/core/early-creeper.js": { "version": "0.1.2", "required": false, "ram": "~5.2 GB" },
+    "/core/improved-creeper.js": { "version": "0.2.1", "required": false, "ram": "~6.0 GB", "status": "WORKING - $14M+ revenue" },
+    
+    "/managers/server-manager.js": { "version": "0.1.0", "required": false, "ram": "~2.5 GB" },
+    
+    "/tools/global-kill.js": { "version": "45.0", "required": false, "ram": "~2.0 GB", "description": "PROMETHEUS killall" },
+    "/tools/telemetry-daemon.js": { "version": "0.1.1", "required": false, "ram": "~2.4 GB" },
+    "/tools/log-action.js": { "version": "0.1.2", "required": false, "ram": "~1.6 GB" },
+    "/tools/blackbox.js": { "version": "0.1.1", "required": false, "ram": "~3.2 GB" },
+    "/tools/target-diagnostic.js": { "version": "0.1.0", "required": false, "ram": "~1.0 GB" }
   },
   
   "changelog": {
-    "0.2.0": {
-      "date": "2025-01-XX",
-      "milestone": "HWGW BATCHING - LE SERPENT FRAPPE ENFIN !",
+    "0.3.0": {
+      "date": "2025-03-14",
+      "title": "NEO LIBÉRÉ - Architecture Modulaire",
       "changes": [
-        "🆕 /lib/prep-module.js - Module prep réutilisable",
-        "🆕 /core/simple-batcher.js - Orchestrateur HWGW basique",
-        "🎓 Research 17KB - Techniques experts Bitburner",
-        "⚡ Revenue: $0/s → $10k-50k/s (projeté)",
-        "📊 Utilisation RAM: 5% → 60-80%",
-        "🎯 Hack 5% par batch avec padding 10x"
-      ]
-    },
-    "0.1.2": {
-      "date": "2025-01-XX",
-      "changes": [
-        "🔧 Fix: ns.tail() → ns.ui.openTail()",
-        "🔧 Fix: getTimeSinceLastAug() deprecation",
-        "🆕 server-manager.js (25 Matrix names)",
-        "🆕 target-diagnostic.js",
-        "📦 Enhanced early-creeper debug"
-      ]
-    },
-    "0.1.1": {
-      "date": "2025-01-XX",
-      "changes": [
-        "🆕 Workers: hack.js, grow.js, weaken.js",
-        "🆕 Core: early-creeper.js",
-        "🆕 CHANGELOG.md"
-      ]
-    },
-    "0.1.0": {
-      "date": "2025-01-XX",
-      "changes": [
-        "Création initiale OUROBOROS",
-        "Système DEBUG multi-niveaux",
-        "State Manager + Telemetry",
-        "BlackBox solver 29 types"
+        "🆕 /lib/autonuke.js - Module scan+root réutilisable",
+        "🆕 /lib/prep.js - Module prep RÉEL (pas ratios arbitraires)",
+        "🆕 /core/batcher.js - Module calcul ratios HWGW (responsabilité unique)",
+        "🆕 /core/dispatcher.js - Module deployment threads (responsabilité unique)",
+        "🆕 /core/smart-orchestrator.js - Orchestrateur MODULAIRE",
+        "🆕 /tools/global-kill.js - PROMETHEUS v45.0 killall intelligent",
+        "🔧 Fix: Syntax error smart-orchestrator (currentMoney déclaré 2x)",
+        "🔧 Fix: Modularité VRAIE (orchestrator → batcher → dispatcher)",
+        "📚 Formation: Mécaniques Bitburner, ratios calculés, prep séquentiel"
       ]
     }
   }

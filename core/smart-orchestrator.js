@@ -36,7 +36,9 @@
  */
 
 import { scanAllServers, rootAllServers, getRootedServersWithRAM } from "/lib/autonuke.js";
-import { isServerReady, prepServer } from "/lib/prep.js";
+import { isServerReady } from "/lib/prep.js";
+import { calculateHWGWRatios, calculatePrepRatios } from "/core/batcher.js";
+import { deployHWGW, deployPrep } from "/core/dispatcher.js";
 import { StateManager } from "/lib/state-manager.js";
 import { Debug, parseDebugLevel, ICONS } from "/lib/debug.js";
 
@@ -155,8 +157,13 @@ export async function main(ns) {
             
             prepMode = true;
             
-            // Deploy prep
-            await deployPrep(ns, dbg, rootedHosts, target);
+            // Calculate prep ratios (40/60)
+            const prepRatios = calculatePrepRatios(ns, target);
+            
+            // Deploy prep via dispatcher
+            const deployed = await deployPrep(ns, rootedHosts, target, prepRatios);
+            
+            dbg.normal(`${ICONS.ROCKET} Deployed PREP: ${deployed.total} threads (W:${deployed.weaken} G:${deployed.grow})`);
             
         } else {
             // MODE HACK
@@ -167,8 +174,8 @@ export async function main(ns) {
                 prepMode = false;
             }
             
-            // Calculer ratios EXACTS
-            const ratios = calculateHackRatios(ns, target, HACK_PERCENT);
+            // Calculate ratios via batcher
+            const ratios = calculateHWGWRatios(ns, target, HACK_PERCENT);
             
             dbg.verbose(`  📊 Ratios (calculated):`);
             dbg.verbose(`     Hack: ${ratios.hackThreads}t`);
@@ -177,22 +184,22 @@ export async function main(ns) {
             dbg.verbose(`     Weaken(G): ${ratios.weakenForGrow}t`);
             dbg.verbose(`     Total: ${ratios.totalThreads}t (${ns.formatRam(ratios.totalRAM)})`);
             
-            // Deploy hack
-            const deployed = await deployHack(ns, dbg, rootedHosts, target, ratios);
+            // Deploy hack via dispatcher
+            const deployed = await deployHWGW(ns, rootedHosts, target, ratios);
             
-            dbg.normal(`${ICONS.ROCKET} Deployed: ${deployed.total} threads`);
+            dbg.normal(`${ICONS.ROCKET} Deployed HACK: ${deployed.total} threads (H:${deployed.hack} W:${deployed.weaken} G:${deployed.grow})`);
         }
         
         // ══════════════════════════════════════════════════════════════
         // PHASE 5 : STATS
         // ══════════════════════════════════════════════════════════════
         
-        const currentMoney = ns.getServerMoneyAvailable("home");
-        const moneyGain = currentMoney - lastMoney;
+        const playerMoney = ns.getServerMoneyAvailable("home");
+        const moneyGain = playerMoney - lastMoney;
         const revenuePerSecond = moneyGain / (UPDATE_INTERVAL / 1000);
         
         dbg.separator();
-        dbg.money("Money", currentMoney);
+        dbg.money("Money", playerMoney);
         
         if (moneyGain > 0) {
             dbg.success(`Gain: +$${ns.formatNumber(moneyGain)} (+$${ns.formatNumber(revenuePerSecond)}/s)`);
@@ -209,7 +216,7 @@ export async function main(ns) {
             mode: ready ? "HACK" : "PREP",
             rootedServers: rootedHosts.length,
             totalRAM,
-            playerMoney: currentMoney,
+            playerMoney: playerMoney,
             moneyGain,
             revenue: revenuePerSecond,
             hackingLevel: ns.getHackingLevel()
@@ -218,7 +225,7 @@ export async function main(ns) {
         dbg.separator();
         dbg.normal(`${ICONS.TIMER} Next cycle in ${UPDATE_INTERVAL/1000}s...`);
         
-        lastMoney = currentMoney;
+        lastMoney = playerMoney;
         await ns.sleep(UPDATE_INTERVAL);
     }
 }
@@ -253,161 +260,4 @@ function selectBestTarget(ns, dbg, servers) {
     scored.sort((a, b) => b.score - a.score);
     
     return scored[0].host;
-}
-
-// ══════════════════════════════════════════════════════════════
-// RATIOS CALCULATION
-// ══════════════════════════════════════════════════════════════
-
-function calculateHackRatios(ns, target, hackPercent) {
-    const maxMoney = ns.getServerMaxMoney(target);
-    
-    // Hack threads
-    const hackThreads = Math.max(1, Math.ceil(ns.hackAnalyzeThreads(target, maxMoney * hackPercent)));
-    
-    // Weaken for hack
-    const hackSecIncrease = hackThreads * 0.002;
-    const weakenForHack = Math.ceil(hackSecIncrease / 0.05);
-    
-    // Grow threads (to restore)
-    const growthNeeded = 1 / (1 - hackPercent);
-    const growThreads = Math.ceil(ns.growthAnalyze(target, growthNeeded));
-    
-    // Weaken for grow
-    const growSecIncrease = growThreads * 0.004;
-    const weakenForGrow = Math.ceil(growSecIncrease / 0.05);
-    
-    const totalThreads = hackThreads + weakenForHack + growThreads + weakenForGrow;
-    const totalRAM = (hackThreads * RAM_COSTS.hack) + 
-                     ((weakenForHack + weakenForGrow) * RAM_COSTS.weaken) + 
-                     (growThreads * RAM_COSTS.grow);
-    
-    return {
-        hackThreads,
-        weakenForHack,
-        growThreads,
-        weakenForGrow,
-        totalThreads,
-        totalRAM
-    };
-}
-
-// ══════════════════════════════════════════════════════════════
-// DEPLOYMENT
-// ══════════════════════════════════════════════════════════════
-
-async function deployPrep(ns, dbg, hosts, target) {
-    // Deploy weaken + grow simple
-    
-    // Copier workers
-    for (const hostInfo of hosts) {
-        for (const script of Object.values(WORKER_SCRIPTS)) {
-            await ns.scp(script, hostInfo.hostname);
-        }
-    }
-    
-    // Kill all
-    for (const hostInfo of hosts) {
-        const procs = ns.ps(hostInfo.hostname);
-        for (const p of procs) {
-            if (Object.values(WORKER_SCRIPTS).includes(p.filename)) {
-                ns.kill(p.pid);
-            }
-        }
-    }
-    
-    // Deploy simple ratio : 40% weaken, 60% grow
-    for (const hostInfo of hosts) {
-        const maxThreads = Math.floor(hostInfo.availableRAM / 1.75);
-        if (maxThreads === 0) continue;
-        
-        const weakenThreads = Math.floor(maxThreads * 0.4);
-        const growThreads = Math.floor(maxThreads * 0.6);
-        
-        if (weakenThreads > 0) {
-            ns.exec(WORKER_SCRIPTS.weaken, hostInfo.hostname, weakenThreads, target);
-        }
-        if (growThreads > 0) {
-            ns.exec(WORKER_SCRIPTS.grow, hostInfo.hostname, growThreads, target);
-        }
-    }
-}
-
-async function deployHack(ns, dbg, hosts, target, ratios) {
-    // Copier workers
-    for (const hostInfo of hosts) {
-        for (const script of Object.values(WORKER_SCRIPTS)) {
-            await ns.scp(script, hostInfo.hostname);
-        }
-    }
-    
-    // Kill all
-    for (const hostInfo of hosts) {
-        const procs = ns.ps(hostInfo.hostname);
-        for (const p of procs) {
-            if (Object.values(WORKER_SCRIPTS).includes(p.filename)) {
-                ns.kill(p.pid);
-            }
-        }
-    }
-    
-    // Calculate total available threads
-    const totalAvailableRAM = hosts.reduce((sum, h) => sum + h.availableRAM, 0);
-    const totalAvailableThreads = Math.floor(totalAvailableRAM / 1.75);
-    
-    // Check if we have enough RAM
-    if (ratios.totalRAM > totalAvailableRAM) {
-        dbg.warn(`Not enough RAM (need ${ns.formatRam(ratios.totalRAM)}, have ${ns.formatRam(totalAvailableRAM)})`);
-        
-        // Scale down proportionally
-        const ratio = totalAvailableRAM / ratios.totalRAM;
-        ratios.hackThreads = Math.max(1, Math.floor(ratios.hackThreads * ratio));
-        ratios.weakenForHack = Math.max(1, Math.floor(ratios.weakenForHack * ratio));
-        ratios.growThreads = Math.max(1, Math.floor(ratios.growThreads * ratio));
-        ratios.weakenForGrow = Math.max(1, Math.floor(ratios.weakenForGrow * ratio));
-    }
-    
-    // Deploy selon ratios calculés
-    let deployed = { hack: 0, grow: 0, weaken: 0, total: 0 };
-    let remainingHack = ratios.hackThreads;
-    let remainingGrow = ratios.growThreads;
-    let remainingWeaken = ratios.weakenForHack + ratios.weakenForGrow;
-    
-    for (const hostInfo of hosts) {
-        const availableThreads = Math.floor(hostInfo.availableRAM / 1.75);
-        if (availableThreads === 0) continue;
-        
-        let usedThreads = 0;
-        
-        // Deploy hack
-        if (remainingHack > 0 && usedThreads < availableThreads) {
-            const threads = Math.min(remainingHack, availableThreads - usedThreads);
-            ns.exec(WORKER_SCRIPTS.hack, hostInfo.hostname, threads, target);
-            deployed.hack += threads;
-            remainingHack -= threads;
-            usedThreads += threads;
-        }
-        
-        // Deploy grow
-        if (remainingGrow > 0 && usedThreads < availableThreads) {
-            const threads = Math.min(remainingGrow, availableThreads - usedThreads);
-            ns.exec(WORKER_SCRIPTS.grow, hostInfo.hostname, threads, target);
-            deployed.grow += threads;
-            remainingGrow -= threads;
-            usedThreads += threads;
-        }
-        
-        // Deploy weaken
-        if (remainingWeaken > 0 && usedThreads < availableThreads) {
-            const threads = Math.min(remainingWeaken, availableThreads - usedThreads);
-            ns.exec(WORKER_SCRIPTS.weaken, hostInfo.hostname, threads, target);
-            deployed.weaken += threads;
-            remainingWeaken -= threads;
-            usedThreads += threads;
-        }
-    }
-    
-    deployed.total = deployed.hack + deployed.grow + deployed.weaken;
-    
-    return deployed;
 }
