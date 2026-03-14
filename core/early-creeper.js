@@ -1,11 +1,11 @@
 /**
  * ╔═══════════════════════════════════════════════════════════╗
- * ║              🐍 OUROBOROS v0.1.1 🐍                       ║
+ * ║              🐍 OUROBOROS v0.1.2 🐍                       ║
  * ║    Early Creeper - Le Serpent Rampant du Réseau          ║
  * ╚═══════════════════════════════════════════════════════════╝
  * 
  * @file        /core/early-creeper.js
- * @version     0.1.1
+ * @version     0.1.2
  * @author      Claude (Godlike AI Operator)
  * @description Orchestrateur early-game (Sequential WGH loop)
  * 
@@ -30,11 +30,11 @@
  *   --debug <N> : Debug level 0-3 (optionnel)
  * 
  * CHANGELOG:
+ *   v0.1.2 - 2025-01-XX - Enhanced debug output
+ *          - Show exact values for action decision
+ *          - Display target money/security percentages
+ *          - Better revenue tracking
  *   v0.1.1 - 2025-01-XX - Création initiale
- *          - Sequential WGH loop
- *          - Auto-root progression
- *          - Smart target selection
- *          - RAM management
  */
 
 import { StateManager } from "/lib/state-manager.js";
@@ -75,11 +75,12 @@ export async function main(ns) {
     const dbg = new Debug(ns, debugLevel);
     const stateMgr = new StateManager(ns, debugLevel);
     
-    dbg.header("EARLY CREEPER v0.1.1");
+    dbg.header("EARLY CREEPER v0.1.2");
     dbg.normal("Le Serpent rampe dans le réseau...", ICONS.SNAKE);
     dbg.separator();
     
     let cycle = 0;
+    let lastMoney = ns.getServerMoneyAvailable("home");
     
     // ══════════════════════════════════════════════════════════════
     // MAIN LOOP
@@ -140,12 +141,21 @@ export async function main(ns) {
         dbg.normal(`${ICONS.TARGET} Target: ${target}`);
         
         const targetInfo = getTargetInfo(ns, target);
-        dbg.verbose(`  Max money: $${ns.formatNumber(targetInfo.maxMoney)}`);
-        dbg.verbose(`  Current: $${ns.formatNumber(targetInfo.currentMoney)} (${targetInfo.moneyPercent.toFixed(1)}%)`);
-        dbg.verbose(`  Security: ${targetInfo.currentSecurity.toFixed(2)} (min: ${targetInfo.minSecurity})`);
+        
+        // ✅ ENHANCED: Show exact percentages
+        dbg.normal(`  💰 Money: ${targetInfo.moneyPercent.toFixed(1)}% ($${ns.formatNumber(targetInfo.currentMoney)}/$${ns.formatNumber(targetInfo.maxMoney)})`);
+        dbg.normal(`  🔒 Security: Δ${targetInfo.securityDelta.toFixed(2)} (${targetInfo.currentSecurity.toFixed(2)}/${targetInfo.minSecurity.toFixed(2)})`);
         
         // ══════════════════════════════════════════════════════════════
-        // PHASE 5 : DEPLOY WORKERS
+        // PHASE 5 : DECIDE ACTION
+        // ══════════════════════════════════════════════════════════════
+        
+        const actionDecision = decideActionWithReason(ns, targetInfo);
+        dbg.normal(`${ICONS.BRAIN} Action: ${actionDecision.action.toUpperCase()}`);
+        dbg.verbose(`  📝 Reason: ${actionDecision.reason}`);
+        
+        // ══════════════════════════════════════════════════════════════
+        // PHASE 6 : DEPLOY WORKERS
         // ══════════════════════════════════════════════════════════════
         
         dbg.verbose(`${ICONS.ROCKET} Deploying workers...`);
@@ -157,24 +167,28 @@ export async function main(ns) {
             }
         }
         
-        // Décider quelle action prioriser
-        const action = decideAction(ns, targetInfo);
-        dbg.normal(`${ICONS.BRAIN} Action: ${action.toUpperCase()}`);
-        
         // Déployer workers selon l'action
-        const deployed = deployWorkers(ns, dbg, rootedServers, target, action);
+        const deployed = deployWorkers(ns, dbg, rootedServers, target, actionDecision.action);
         
         dbg.normal(`${ICONS.ROCKET} Deployed ${deployed} thread(s)`);
         
         // ══════════════════════════════════════════════════════════════
-        // PHASE 6 : STATS & MONITORING
+        // PHASE 7 : STATS & MONITORING
         // ══════════════════════════════════════════════════════════════
         
-        const playerMoney = ns.getServerMoneyAvailable("home");
+        const currentMoney = ns.getServerMoneyAvailable("home");
         const hackingLevel = ns.getHackingLevel();
+        const moneyGain = currentMoney - lastMoney;
+        const revenuePerSecond = moneyGain / (UPDATE_INTERVAL / 1000);
         
         dbg.separator();
-        dbg.money("Money", playerMoney);
+        dbg.money("Money", currentMoney);
+        
+        if (moneyGain > 0) {
+            dbg.normal(`${ICONS.CHART} Gain this cycle: +$${ns.formatNumber(moneyGain)}`);
+            dbg.normal(`${ICONS.SPEED} Revenue: ~$${ns.formatNumber(revenuePerSecond)}/s`);
+        }
+        
         dbg.normal(`${ICONS.TARGET} Hacking: ${hackingLevel}`);
         dbg.normal(`${ICONS.CHART} Deployed threads: ${deployed}`);
         
@@ -183,17 +197,22 @@ export async function main(ns) {
             timestamp: timestamp,
             cycle: cycle,
             target: target,
-            action: action,
+            action: actionDecision.action,
+            actionReason: actionDecision.reason,
             deployedThreads: deployed,
             rootedServers: rootedServers.length,
             totalServers: allServers.length,
-            playerMoney: playerMoney,
-            hackingLevel: hackingLevel
+            playerMoney: currentMoney,
+            moneyGain: moneyGain,
+            estimatedRevenue: revenuePerSecond,
+            hackingLevel: hackingLevel,
+            targetInfo: targetInfo
         });
         
         dbg.separator();
         dbg.normal(`${ICONS.TIMER} Next cycle in ${UPDATE_INTERVAL/1000}s...`);
         
+        lastMoney = currentMoney;
         await ns.sleep(UPDATE_INTERVAL);
     }
 }
@@ -369,24 +388,33 @@ function getTargetInfo(ns, target) {
 }
 
 /**
- * Décider action (weaken/grow/hack)
+ * Décider action avec raison explicite
  * @param {NS} ns
  * @param {object} targetInfo
- * @returns {string}
+ * @returns {object} {action, reason}
  */
-function decideAction(ns, targetInfo) {
+function decideActionWithReason(ns, targetInfo) {
     // Si sécurité trop élevée → weaken
     if (targetInfo.securityDelta > SECURITY_THRESHOLD) {
-        return "weaken";
+        return {
+            action: "weaken",
+            reason: `Security too high (Δ${targetInfo.securityDelta.toFixed(2)} > ${SECURITY_THRESHOLD})`
+        };
     }
     
     // Si argent trop faible → grow
     if (targetInfo.moneyPercent < MONEY_THRESHOLD * 100) {
-        return "grow";
+        return {
+            action: "grow",
+            reason: `Money too low (${targetInfo.moneyPercent.toFixed(1)}% < ${MONEY_THRESHOLD * 100}%)`
+        };
     }
     
     // Sinon → hack
-    return "hack";
+    return {
+        action: "hack",
+        reason: "Optimal conditions (security OK, money OK)"
+    };
 }
 
 // ══════════════════════════════════════════════════════════════
