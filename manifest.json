@@ -1,6 +1,6 @@
 {
   "name": "OUROBOROS",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Framework d'automatisation Bitburner - Le Serpent Éternel",
   "author": "Claude (Godlike AI Operator)",
   "created": "2025-01-XX",
@@ -20,6 +20,14 @@
       "version": "0.1.0",
       "type": "library",
       "description": "API persistence pour /state/",
+      "dependencies": ["/lib/debug.js"],
+      "ram": "0.00 GB",
+      "required": true
+    },
+    "/lib/prep-module.js": {
+      "version": "0.2.0",
+      "type": "library",
+      "description": "Module préparation serveur (min sec / max money)",
       "dependencies": ["/lib/debug.js"],
       "ram": "0.00 GB",
       "required": true
@@ -49,15 +57,31 @@
       "required": true
     },
     "/core/early-creeper.js": {
-      "version": "0.1.1",
+      "version": "0.1.2",
       "type": "core",
       "description": "Orchestrateur early-game (Sequential WGH)",
       "dependencies": ["/lib/debug.js", "/lib/state-manager.js", "/workers/hack.js", "/workers/grow.js", "/workers/weaken.js"],
       "ram": "5.20 GB",
       "required": false
     },
+    "/core/simple-batcher.js": {
+      "version": "0.2.0",
+      "type": "core",
+      "description": "Orchestrateur HWGW simple (1 batch à la fois)",
+      "dependencies": ["/lib/debug.js", "/lib/state-manager.js", "/lib/prep-module.js", "/workers/hack.js", "/workers/grow.js", "/workers/weaken.js"],
+      "ram": "6.50 GB",
+      "required": false
+    },
+    "/managers/server-manager.js": {
+      "version": "0.1.0",
+      "type": "manager",
+      "description": "Gestionnaire purchased servers (25 Matrix names)",
+      "dependencies": ["/lib/debug.js", "/lib/state-manager.js"],
+      "ram": "3.80 GB",
+      "required": false
+    },
     "/tools/log-action.js": {
-      "version": "0.1.1",
+      "version": "0.1.2",
       "type": "tool",
       "description": "Logger actions manuelles opérateur",
       "dependencies": ["/lib/debug.js", "/lib/state-manager.js"],
@@ -79,6 +103,14 @@
       "dependencies": ["/lib/debug.js", "/lib/state-manager.js"],
       "ram": "3.20 GB",
       "required": false
+    },
+    "/tools/target-diagnostic.js": {
+      "version": "0.1.0",
+      "type": "tool",
+      "description": "Diagnostic détaillé d'un target",
+      "dependencies": [],
+      "ram": "1.85 GB",
+      "required": false
     }
   },
   
@@ -86,7 +118,7 @@
     "/lib": "Bibliothèques réutilisables",
     "/core": "Logique centrale (orchestrateurs)",
     "/workers": "Workers minimalistes (hack/grow/weaken)",
-    "/managers": "Gestionnaires intelligents (à venir)",
+    "/managers": "Gestionnaires intelligents",
     "/state": "Fichiers JSON générés (auto-créé)",
     "/tools": "Outils utilitaires"
   },
@@ -99,40 +131,56 @@
     "/state/operator-actions.json": "Historique actions opérateur",
     "/state/contracts-history.json": "Historique coding contracts",
     "/state/creeper-status.json": "Status early-creeper",
+    "/state/batcher-status.json": "Status simple-batcher (NOUVEAU)",
+    "/state/servers-status.json": "Status purchased servers",
     "/state/version-tracking.json": "Versions fichiers actifs"
   },
   
   "deployment": {
     "method": "GitHub wget",
-    "repository": "https://github.com/TON_USER/ouroboros",
+    "repository": "https://github.com/tylersense-ui/-OUROBOROS-v0.1.0-",
     "branch": "main",
-    "deploy_script": "deploy-ouroboros-v0.1.1.js"
+    "deploy_script": "deploy-ouroboros-v0.2.0.js"
   },
   
   "changelog": {
+    "0.2.0": {
+      "date": "2025-01-XX",
+      "milestone": "HWGW BATCHING - LE SERPENT FRAPPE ENFIN !",
+      "changes": [
+        "🆕 /lib/prep-module.js - Module prep réutilisable",
+        "🆕 /core/simple-batcher.js - Orchestrateur HWGW basique",
+        "🎓 Research 17KB - Techniques experts Bitburner",
+        "⚡ Revenue: $0/s → $10k-50k/s (projeté)",
+        "📊 Utilisation RAM: 5% → 60-80%",
+        "🎯 Hack 5% par batch avec padding 10x"
+      ]
+    },
+    "0.1.2": {
+      "date": "2025-01-XX",
+      "changes": [
+        "🔧 Fix: ns.tail() → ns.ui.openTail()",
+        "🔧 Fix: getTimeSinceLastAug() deprecation",
+        "🆕 server-manager.js (25 Matrix names)",
+        "🆕 target-diagnostic.js",
+        "📦 Enhanced early-creeper debug"
+      ]
+    },
     "0.1.1": {
       "date": "2025-01-XX",
       "changes": [
         "🆕 Workers: hack.js, grow.js, weaken.js",
-        "🆕 Core: early-creeper.js (orchestrateur early-game)",
-        "🔧 Fix: ns.tail() → ns.ui.openTail() (deprecation)",
-        "🔧 Fix: ns.getTimeSinceLastAug() → Date.now() - ns.getResetInfo().lastAugReset",
-        "📦 Updated: telemetry-daemon.js v0.1.1",
-        "📦 Updated: log-action.js v0.1.1",
-        "📦 Updated: blackbox.js v0.1.1"
+        "🆕 Core: early-creeper.js",
+        "🆕 CHANGELOG.md"
       ]
     },
     "0.1.0": {
       "date": "2025-01-XX",
       "changes": [
         "Création initiale OUROBOROS",
-        "Système DEBUG universel (4 niveaux)",
-        "State Manager avec auto-création /state/",
-        "Telemetry Daemon avec alarmes",
-        "Operator Logger",
-        "Coding Contracts Solver (29 types)",
-        "Headers ASCII art complets",
-        "Support --debug sur tous les scripts"
+        "Système DEBUG multi-niveaux",
+        "State Manager + Telemetry",
+        "BlackBox solver 29 types"
       ]
     }
   }
