@@ -1,0 +1,156 @@
+{
+  "timestamp": "2026-03-16T00:05:25.795Z",
+  "cycle": 144,
+  "target": "foodnstuff",
+  "strategy": {
+    "mode": "hack",
+    "reason": "Optimal conditions (sec OK, money OK)",
+    "ratios": {
+      "hack": 20,
+      "grow": 60,
+      "weaken": 20
+    }
+  },
+  "deployed": {
+    "hack": 5,
+    "grow": 37,
+    "weaken": 5,
+    "total": 47
+  },
+  "rootedServers": 20,
+  "totalServers": 73,
+  "ramAnalysis": {
+    "totalMax": 636,
+    "totalUsed": 487.45000000000005,
+    "totalAvailable": 148.55,
+    "usagePercent": 76.6430817610063,
+    "hostsDetails": [
+      {
+        "hostname": "avmnite-02h",
+        "maxRam": 128,
+        "usedRam": 103.15,
+        "availableRam": 24.849999999999994
+      },
+      {
+        "hostname": "home",
+        "maxRam": 128,
+        "usedRam": 106.1,
+        "availableRam": 21.900000000000006
+      },
+      {
+        "hostname": "silver-helix",
+        "maxRam": 64,
+        "usedRam": 50.7,
+        "availableRam": 13.299999999999997
+      },
+      {
+        "hostname": "iron-gym",
+        "maxRam": 32,
+        "usedRam": 24.5,
+        "availableRam": 7.5
+      },
+      {
+        "hostname": "zer0",
+        "maxRam": 32,
+        "usedRam": 24.5,
+        "availableRam": 7.5
+      },
+      {
+        "hostname": "max-hardware",
+        "maxRam": 32,
+        "usedRam": 24.5,
+        "availableRam": 7.5
+      },
+      {
+        "hostname": "neo-net",
+        "maxRam": 32,
+        "usedRam": 24.5,
+        "availableRam": 7.5
+      },
+      {
+        "hostname": "omega-net",
+        "maxRam": 32,
+        "usedRam": 24.5,
+        "availableRam": 7.5
+      },
+      {
+        "hostname": "phantasy",
+        "maxRam": 32,
+        "usedRam": 24.5,
+        "availableRam": 7.5
+      },
+      {
+        "hostname": "foodnstuff",
+        "maxRam": 16,
+        "usedRam": 10.5,
+        "availableRam": 5.5
+      },
+      {
+        "hostname": "sigma-cosmetics",
+        "maxRam": 16,
+        "usedRam": 10.5,
+        "availableRam": 5.5
+      },
+      {
+        "hostname": "joesguns",
+        "maxRam": 16,
+        "usedRam": 10.5,
+        "availableRam": 5.5
+      },
+      {
+        "hostname": "hong-fang-tea",
+        "maxRam": 16,
+        "usedRam": 10.5,
+        "availableRam": 5.5
+      },
+      {
+        "hostname": "harakiri-sushi",
+        "maxRam": 16,
+        "usedRam": 10.5,
+        "availableRam": 5.5
+      },
+      {
+        "hostname": "nectar-net",
+        "maxRam": 16,
+        "usedRam": 10.5,
+        "availableRam": 5.5
+      },
+      {
+        "hostname": "morpheus",
+        "maxRam": 8,
+        "usedRam": 5.25,
+        "availableRam": 2.75
+      },
+      {
+        "hostname": "trinity",
+        "maxRam": 8,
+        "usedRam": 5.25,
+        "availableRam": 2.75
+      },
+      {
+        "hostname": "CSEC",
+        "maxRam": 8,
+        "usedRam": 5.25,
+        "availableRam": 2.75
+      },
+      {
+        "hostname": "n00dles",
+        "maxRam": 4,
+        "usedRam": 1.75,
+        "availableRam": 2.25
+      }
+    ]
+  },
+  "playerMoney": 203583000.8098983,
+  "moneyGain": 0,
+  "estimatedRevenue": 0,
+  "hackingLevel": 245,
+  "targetInfo": {
+    "maxMoney": 50000000,
+    "currentMoney": 37938882.471091226,
+    "moneyPercent": 75.87776494218245,
+    "minSecurity": 3,
+    "currentSecurity": 3,
+    "securityDelta": 0
+  }
+}

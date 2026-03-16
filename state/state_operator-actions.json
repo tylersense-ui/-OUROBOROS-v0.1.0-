@@ -1,0 +1,146 @@
+{
+  "version": "0.1.1",
+  "created": "2026-03-14T00:25:08.302Z",
+  "actions": [
+    {
+      "timestamp": "2026-03-14T00:25:08.302Z",
+      "action": "Work in JoesGuns",
+      "context": {
+        "money": 5223.220661321859,
+        "hackingLevel": 1,
+        "homeRam": 8,
+        "timeSinceAug": 17826988
+      }
+    },
+    {
+      "timestamp": "2026-03-14T00:38:30.595Z",
+      "action": "[the slums] > Mug",
+      "context": {
+        "money": 70220.77949443815,
+        "hackingLevel": 18,
+        "homeRam": 8,
+        "timeSinceAug": 18629281
+      }
+    },
+    {
+      "timestamp": "2026-03-14T00:38:49.349Z",
+      "action": "Buy TOR router",
+      "context": {
+        "money": 70220.77949443815,
+        "hackingLevel": 18,
+        "homeRam": 8,
+        "timeSinceAug": 18648035
+      }
+    },
+    {
+      "timestamp": "2026-03-14T00:50:59.983Z",
+      "action": "Buy BruteSSH.exe",
+      "context": {
+        "money": 170787.54770073196,
+        "hackingLevel": 51,
+        "homeRam": 8,
+        "timeSinceAug": 19378669
+      }
+    },
+    {
+      "timestamp": "2026-03-14T01:01:50.093Z",
+      "action": "Upgrade home RAM to 16GB",
+      "context": {
+        "money": 143789.2964019404,
+        "hackingLevel": 88,
+        "homeRam": 16,
+        "timeSinceAug": 20028779
+      }
+    },
+    {
+      "timestamp": "2026-03-14T01:02:37.071Z",
+      "action": "run telemetry",
+      "context": {
+        "money": 180187.282353837,
+        "hackingLevel": 88,
+        "homeRam": 16,
+        "timeSinceAug": 20075757
+      }
+    },
+    {
+      "timestamp": "2026-03-14T01:10:44.139Z",
+      "action": "buy FTPCrack.exe",
+      "context": {
+        "money": 245300.67828539034,
+        "hackingLevel": 106,
+        "homeRam": 16,
+        "timeSinceAug": 20562825
+      }
+    },
+    {
+      "timestamp": "2026-03-14T01:16:26.173Z",
+      "action": "Join CyberSec",
+      "context": {
+        "money": 19230.18660177081,
+        "hackingLevel": 117,
+        "homeRam": 16,
+        "timeSinceAug": 20904860
+      }
+    },
+    {
+      "timestamp": "2026-03-14T15:08:02.689Z",
+      "action": "Join Slum-Snakes faction",
+      "context": {
+        "money": 2497625.2499730764,
+        "hackingLevel": 177,
+        "homeRam": 16,
+        "timeSinceAug": 70801375
+      }
+    },
+    {
+      "timestamp": "2026-03-14T15:29:39.809Z",
+      "action": "Upgrade 'home' RAM > 32GB",
+      "context": {
+        "money": 2201973.397437433,
+        "hackingLevel": 177,
+        "homeRam": 32,
+        "timeSinceAug": 72098495
+      }
+    },
+    {
+      "timestamp": "2026-03-14T15:29:54.285Z",
+      "action": "buy relaySMTP.exe",
+      "context": {
+        "money": 2201973.397437433,
+        "hackingLevel": 177,
+        "homeRam": 32,
+        "timeSinceAug": 72112971
+      }
+    },
+    {
+      "timestamp": "2026-03-14T20:18:14.724Z",
+      "action": "buy HTTPWorm.exe",
+      "context": {
+        "money": 7523147.879965,
+        "hackingLevel": 188,
+        "homeRam": 64,
+        "timeSinceAug": 89413411
+      }
+    },
+    {
+      "timestamp": "2026-03-14T20:30:11.588Z",
+      "action": "buy DeepscanV2.exe",
+      "context": {
+        "money": 4259888.020011641,
+        "hackingLevel": 192,
+        "homeRam": 64,
+        "timeSinceAug": 90130275
+      }
+    },
+    {
+      "timestamp": "2026-03-14T21:01:01.204Z",
+      "action": "Upgrade 'home' RAM > 128GB",
+      "context": {
+        "money": 30576386.999868326,
+        "hackingLevel": 201,
+        "homeRam": 128,
+        "timeSinceAug": 91979890
+      }
+    }
+  ]
+}

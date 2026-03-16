@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-03-14T15:08:12.965Z",
+  "cycle": 2,
+  "totalServers": 1,
+  "maxServers": 25,
+  "currentMoney": 2606819.2078287667,
+  "reserve": 521363.84156575333,
+  "budgetAvailable": 2085455.3662630133,
+  "servers": [
+    {
+      "hostname": "morpheus",
+      "maxRAM": 8,
+      "usedRAM": 0,
+      "availableRAM": 8,
+      "processCount": 0,
+      "ramUsagePercent": 0
+    },
+    {
+      "hostname": "trinity",
+      "maxRAM": 8,
+      "usedRAM": 0,
+      "availableRAM": 8,
+      "processCount": 0,
+      "ramUsagePercent": 0
+    }
+  ]
+}

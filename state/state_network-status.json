@@ -1,0 +1,782 @@
+{
+  "timestamp": "2026-03-14T02:14:17.765Z",
+  "totalServersScanned": 71,
+  "totalServersRooted": 15,
+  "totalServersWithScripts": 15,
+  "totalServersEmpty": 0,
+  "totalRamNetwork": 3916,
+  "totalRamUsed": 340.8,
+  "totalRamAvailable": 3575.2,
+  "ramUsagePercent": 8.702757916241062,
+  "serversDetail": [
+    {
+      "hostname": "home",
+      "hasRoot": true,
+      "maxRam": 16,
+      "usedRam": 15.3,
+      "availableRam": 0.6999999999999993,
+      "processCount": 3,
+      "processes": [
+        {
+          "filename": "tools/telemetry-daemon.js",
+          "threads": 1,
+          "args": []
+        },
+        {
+          "filename": "core/early-creeper.js",
+          "threads": 1,
+          "args": []
+        },
+        {
+          "filename": "workers/grow.js",
+          "threads": 1,
+          "args": [
+            "foodnstuff"
+          ]
+        }
+      ]
+    },
+    {
+      "hostname": "n00dles",
+      "hasRoot": true,
+      "maxRam": 4,
+      "usedRam": 3.5,
+      "availableRam": 0.5,
+      "processCount": 1,
+      "processes": [
+        {
+          "filename": "workers/grow.js",
+          "threads": 2,
+          "args": [
+            "foodnstuff"
+          ]
+        }
+      ]
+    },
+    {
+      "hostname": "foodnstuff",
+      "hasRoot": true,
+      "maxRam": 16,
+      "usedRam": 15.75,
+      "availableRam": 0.25,
+      "processCount": 1,
+      "processes": [
+        {
+          "filename": "workers/grow.js",
+          "threads": 9,
+          "args": [
+            "foodnstuff"
+          ]
+        }
+      ]
+    },
+    {
+      "hostname": "sigma-cosmetics",
+      "hasRoot": true,
+      "maxRam": 16,
+      "usedRam": 15.75,
+      "availableRam": 0.25,
+      "processCount": 1,
+      "processes": [
+        {
+          "filename": "workers/grow.js",
+          "threads": 9,
+          "args": [
+            "foodnstuff"
+          ]
+        }
+      ]
+    },
+    {
+      "hostname": "joesguns",
+      "hasRoot": true,
+      "maxRam": 16,
+      "usedRam": 15.75,
+      "availableRam": 0.25,
+      "processCount": 1,
+      "processes": [
+        {
+          "filename": "workers/grow.js",
+          "threads": 9,
+          "args": [
+            "foodnstuff"
+          ]
+        }
+      ]
+    },
+    {
+      "hostname": "hong-fang-tea",
+      "hasRoot": true,
+      "maxRam": 16,
+      "usedRam": 15.75,
+      "availableRam": 0.25,
+      "processCount": 1,
+      "processes": [
+        {
+          "filename": "workers/grow.js",
+          "threads": 9,
+          "args": [
+            "foodnstuff"
+          ]
+        }
+      ]
+    },
+    {
+      "hostname": "harakiri-sushi",
+      "hasRoot": true,
+      "maxRam": 16,
+      "usedRam": 15.75,
+      "availableRam": 0.25,
+      "processCount": 1,
+      "processes": [
+        {
+          "filename": "workers/grow.js",
+          "threads": 9,
+          "args": [
+            "foodnstuff"
+          ]
+        }
+      ]
+    },
+    {
+      "hostname": "iron-gym",
+      "hasRoot": true,
+      "maxRam": 32,
+      "usedRam": 31.5,
+      "availableRam": 0.5,
+      "processCount": 1,
+      "processes": [
+        {
+          "filename": "workers/grow.js",
+          "threads": 18,
+          "args": [
+            "foodnstuff"
+          ]
+        }
+      ]
+    },
+    {
+      "hostname": "darkweb",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "nectar-net",
+      "hasRoot": true,
+      "maxRam": 16,
+      "usedRam": 15.75,
+      "availableRam": 0.25,
+      "processCount": 1,
+      "processes": [
+        {
+          "filename": "workers/grow.js",
+          "threads": 9,
+          "args": [
+            "foodnstuff"
+          ]
+        }
+      ]
+    },
+    {
+      "hostname": "CSEC",
+      "hasRoot": true,
+      "maxRam": 8,
+      "usedRam": 7,
+      "availableRam": 1,
+      "processCount": 1,
+      "processes": [
+        {
+          "filename": "workers/grow.js",
+          "threads": 4,
+          "args": [
+            "foodnstuff"
+          ]
+        }
+      ]
+    },
+    {
+      "hostname": "zer0",
+      "hasRoot": true,
+      "maxRam": 32,
+      "usedRam": 31.5,
+      "availableRam": 0.5,
+      "processCount": 1,
+      "processes": [
+        {
+          "filename": "workers/grow.js",
+          "threads": 18,
+          "args": [
+            "foodnstuff"
+          ]
+        }
+      ]
+    },
+    {
+      "hostname": "max-hardware",
+      "hasRoot": true,
+      "maxRam": 32,
+      "usedRam": 31.5,
+      "availableRam": 0.5,
+      "processCount": 1,
+      "processes": [
+        {
+          "filename": "workers/grow.js",
+          "threads": 18,
+          "args": [
+            "foodnstuff"
+          ]
+        }
+      ]
+    },
+    {
+      "hostname": "neo-net",
+      "hasRoot": true,
+      "maxRam": 32,
+      "usedRam": 31.5,
+      "availableRam": 0.5,
+      "processCount": 1,
+      "processes": [
+        {
+          "filename": "workers/grow.js",
+          "threads": 18,
+          "args": [
+            "foodnstuff"
+          ]
+        }
+      ]
+    },
+    {
+      "hostname": "omega-net",
+      "hasRoot": false,
+      "maxRam": 32,
+      "usedRam": 0,
+      "availableRam": 32,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "silver-helix",
+      "hasRoot": true,
+      "maxRam": 64,
+      "usedRam": 63,
+      "availableRam": 1,
+      "processCount": 1,
+      "processes": [
+        {
+          "filename": "workers/grow.js",
+          "threads": 36,
+          "args": [
+            "foodnstuff"
+          ]
+        }
+      ]
+    },
+    {
+      "hostname": "phantasy",
+      "hasRoot": true,
+      "maxRam": 32,
+      "usedRam": 31.5,
+      "availableRam": 0.5,
+      "processCount": 1,
+      "processes": [
+        {
+          "filename": "workers/grow.js",
+          "threads": 18,
+          "args": [
+            "foodnstuff"
+          ]
+        }
+      ]
+    },
+    {
+      "hostname": "computek",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "johnson-ortho",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "the-hub",
+      "hasRoot": false,
+      "maxRam": 64,
+      "usedRam": 0,
+      "availableRam": 64,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "netlink",
+      "hasRoot": false,
+      "maxRam": 16,
+      "usedRam": 0,
+      "availableRam": 16,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "crush-fitness",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "avmnite-02h",
+      "hasRoot": false,
+      "maxRam": 128,
+      "usedRam": 0,
+      "availableRam": 128,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "rothman-uni",
+      "hasRoot": false,
+      "maxRam": 32,
+      "usedRam": 0,
+      "availableRam": 32,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "catalyst",
+      "hasRoot": false,
+      "maxRam": 64,
+      "usedRam": 0,
+      "availableRam": 64,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "syscore",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "zb-institute",
+      "hasRoot": false,
+      "maxRam": 16,
+      "usedRam": 0,
+      "availableRam": 16,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "summit-uni",
+      "hasRoot": false,
+      "maxRam": 64,
+      "usedRam": 0,
+      "availableRam": 64,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "I.I.I.I",
+      "hasRoot": false,
+      "maxRam": 64,
+      "usedRam": 0,
+      "availableRam": 64,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "millenium-fitness",
+      "hasRoot": false,
+      "maxRam": 128,
+      "usedRam": 0,
+      "availableRam": 128,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "lexo-corp",
+      "hasRoot": false,
+      "maxRam": 32,
+      "usedRam": 0,
+      "availableRam": 32,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "alpha-ent",
+      "hasRoot": false,
+      "maxRam": 16,
+      "usedRam": 0,
+      "availableRam": 16,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "aevum-police",
+      "hasRoot": false,
+      "maxRam": 64,
+      "usedRam": 0,
+      "availableRam": 64,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "rho-construction",
+      "hasRoot": false,
+      "maxRam": 16,
+      "usedRam": 0,
+      "availableRam": 16,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "galactic-cyber",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "global-pharm",
+      "hasRoot": false,
+      "maxRam": 64,
+      "usedRam": 0,
+      "availableRam": 64,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "aerocorp",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "snap-fitness",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "omnia",
+      "hasRoot": false,
+      "maxRam": 16,
+      "usedRam": 0,
+      "availableRam": 16,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "deltaone",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "unitalife",
+      "hasRoot": false,
+      "maxRam": 16,
+      "usedRam": 0,
+      "availableRam": 16,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "defcomm",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "icarus",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "univ-energy",
+      "hasRoot": false,
+      "maxRam": 16,
+      "usedRam": 0,
+      "availableRam": 16,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "solaris",
+      "hasRoot": false,
+      "maxRam": 64,
+      "usedRam": 0,
+      "availableRam": 64,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "zeus-med",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "infocomm",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "nova-med",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "taiyang-digital",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "zb-def",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "run4theh111z",
+      "hasRoot": false,
+      "maxRam": 64,
+      "usedRam": 0,
+      "availableRam": 64,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "titan-labs",
+      "hasRoot": false,
+      "maxRam": 32,
+      "usedRam": 0,
+      "availableRam": 32,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "microdyne",
+      "hasRoot": false,
+      "maxRam": 16,
+      "usedRam": 0,
+      "availableRam": 16,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "applied-energetics",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "fulcrumtech",
+      "hasRoot": false,
+      "maxRam": 2048,
+      "usedRam": 0,
+      "availableRam": 2048,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "helios",
+      "hasRoot": false,
+      "maxRam": 64,
+      "usedRam": 0,
+      "availableRam": 64,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "stormtech",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "vitalife",
+      "hasRoot": false,
+      "maxRam": 128,
+      "usedRam": 0,
+      "availableRam": 128,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "omnitek",
+      "hasRoot": false,
+      "maxRam": 128,
+      "usedRam": 0,
+      "availableRam": 128,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "kuai-gong",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": ".",
+      "hasRoot": false,
+      "maxRam": 16,
+      "usedRam": 0,
+      "availableRam": 16,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "4sigma",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "b-and-a",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "blade",
+      "hasRoot": false,
+      "maxRam": 128,
+      "usedRam": 0,
+      "availableRam": 128,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "nwo",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "clarkinc",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "powerhouse-fitness",
+      "hasRoot": false,
+      "maxRam": 32,
+      "usedRam": 0,
+      "availableRam": 32,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "fulcrumassets",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "The-Cave",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "ecorp",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    },
+    {
+      "hostname": "megacorp",
+      "hasRoot": false,
+      "maxRam": 0,
+      "usedRam": 0,
+      "availableRam": 0,
+      "processCount": 0,
+      "processes": []
+    }
+  ]
+}

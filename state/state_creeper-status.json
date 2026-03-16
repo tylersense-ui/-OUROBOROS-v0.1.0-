@@ -1,0 +1,22 @@
+{
+  "timestamp": "2026-03-14T15:00:08.709Z",
+  "cycle": 123,
+  "target": "foodnstuff",
+  "action": "grow",
+  "actionReason": "Money too low (68.0% < 75%)",
+  "deployedThreads": 0,
+  "rootedServers": 15,
+  "totalServers": 71,
+  "playerMoney": 383210.0461207368,
+  "moneyGain": 0,
+  "estimatedRevenue": 0,
+  "hackingLevel": 177,
+  "targetInfo": {
+    "maxMoney": 50000000,
+    "currentMoney": 34003844.226809025,
+    "moneyPercent": 68.00768845361806,
+    "minSecurity": 3,
+    "currentSecurity": 6.0399999999999965,
+    "securityDelta": 3.0399999999999965
+  }
+}

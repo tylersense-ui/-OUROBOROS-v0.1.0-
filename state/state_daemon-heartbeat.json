@@ -1,0 +1,49 @@
+{
+  "timestamp": "2026-03-14T02:14:17.764Z",
+  "cycle": 7,
+  "pid": 1090,
+  "uptime": 24376452,
+  "debugLevel": 1,
+  "alarms": [
+    {
+      "timestamp": "2026-03-14T02:11:17.750Z",
+      "type": "EMPTY_SERVERS",
+      "message": "14 rooted servers are EMPTY (deployment issue?)"
+    },
+    {
+      "timestamp": "2026-03-14T02:11:17.750Z",
+      "type": "ZERO_REVENUE",
+      "message": "1 threads active but $0/s revenue (stuck?)"
+    },
+    {
+      "timestamp": "2026-03-14T02:11:47.753Z",
+      "type": "ZERO_REVENUE",
+      "message": "189 threads active but $0/s revenue (stuck?)"
+    },
+    {
+      "timestamp": "2026-03-14T02:12:17.756Z",
+      "type": "ZERO_REVENUE",
+      "message": "189 threads active but $0/s revenue (stuck?)"
+    },
+    {
+      "timestamp": "2026-03-14T02:12:47.758Z",
+      "type": "ZERO_REVENUE",
+      "message": "189 threads active but $0/s revenue (stuck?)"
+    },
+    {
+      "timestamp": "2026-03-14T02:13:17.760Z",
+      "type": "ZERO_REVENUE",
+      "message": "189 threads active but $0/s revenue (stuck?)"
+    },
+    {
+      "timestamp": "2026-03-14T02:13:47.763Z",
+      "type": "ZERO_REVENUE",
+      "message": "189 threads active but $0/s revenue (stuck?)"
+    },
+    {
+      "timestamp": "2026-03-14T02:14:17.766Z",
+      "type": "ZERO_REVENUE",
+      "message": "189 threads active but $0/s revenue (stuck?)"
+    }
+  ]
+}

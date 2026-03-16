@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-03-14T02:14:17.766Z",
+  "versions": {
+    "/core/early-creeper.js": "0.1.2",
+    "/lib/debug.js": "0.1.0",
+    "/lib/state-manager.js": "0.1.0",
+    "/tools/log-action.js": "0.1.2",
+    "/tools/telemetry-daemon.js": "0.1.1",
+    "/tools/blackbox.js": "0.1.1"
+  }
+}
